@@ -1,0 +1,22 @@
+RewriteEngine On
+
+# Redirecionar HTTP para HTTPS (se tiver SSL)
+# RewriteCond %{HTTPS} off
+# RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
+
+# Remover extensão .php
+RewriteCond %{REQUEST_FILENAME} !-d
+RewriteCond %{REQUEST_FILENAME}\.php -f
+RewriteRule ^(.*)$ $1.php [NC,L]
+
+# Página inicial
+DirectoryIndex pages/index.php
+
+# Proteger diretórios sensíveis
+RedirectMatch 403 ^/config/?$
+RedirectMatch 403 ^/models/?$
+RedirectMatch 403 ^/api/?$
+
+# Erros personalizados
+ErrorDocument 404 /pages/404.php
+ErrorDocument 403 /pages/403.php

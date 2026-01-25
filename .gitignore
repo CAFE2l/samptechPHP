@@ -1,0 +1,255 @@
+/config/firebase-admin.json
+node_modules
+/vendor/
+
+Composer-Setup.exe# ============================================
+# ARQUIVOS DE CONFIGURAÇÃO SENSÍVEIS
+# ============================================
+.env
+.env.local
+.env.production
+.env.development
+*.env
+config/database.php
+config/firebase-admin.json
+firebase-adminsdk-*.json
+credentials.json
+
+# ============================================
+# NODE.JS / NEXT.JS
+# ============================================
+node_modules/
+.next/
+out/
+build/
+dist/
+*.tsbuildinfo
+next-env.d.ts
+
+# Logs do Node
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+lerna-debug.log*
+pnpm-debug.log*
+
+# ============================================
+# PHP / COMPOSER
+# ============================================
+vendor/
+composer.phar
+composer.lock
+Composer-Setup.exe
+
+# ============================================
+# BANCO DE DADOS
+# ============================================
+*.sql
+*.sqlite
+*.db
+*.mdb
+database/*.sqlite
+
+# Backups
+*.backup
+*.bak
+*.old
+
+# ============================================
+# SESSÕES E CACHE
+# ============================================
+storage/
+storage/logs/
+storage/cache/
+storage/sessions/
+cache/
+sessions/
+tmp/
+temp/
+
+# ============================================
+# UPLOADS E ARQUIVOS DE USUÁRIOS
+# ============================================
+uploads/*
+!uploads/.gitkeep
+public/uploads/*
+!public/uploads/.gitkeep
+
+# ============================================
+# IDEs E EDITORES
+# ============================================
+
+# VS Code
+.vscode/
+.vscode/*
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+!.vscode/extensions.json
+*.code-workspace
+
+# PHPStorm / IntelliJ IDEA
+.idea/
+*.iml
+*.iws
+*.ipr
+
+# Sublime Text
+*.sublime-project
+*.sublime-workspace
+
+# NetBeans
+nbproject/
+
+# Eclipse
+.buildpath
+.project
+.settings/
+
+# ============================================
+# SISTEMA OPERACIONAL
+# ============================================
+
+# macOS
+.DS_Store
+.AppleDouble
+.LSOverride
+._*
+.DocumentRevisions-V100
+.fseventsd
+.Spotlight-V100
+.TemporaryItems
+.Trashes
+.VolumeIcon.icns
+.com.apple.timemachine.donotpresent
+
+# Windows
+Thumbs.db
+Thumbs.db:encryptable
+ehthumbs.db
+ehthumbs_vista.db
+*.stackdump
+[Dd]esktop.ini
+$RECYCLE.BIN/
+*.lnk
+
+# Linux
+*~
+.directory
+.Trash-*
+
+# ============================================
+# LOGS E DEBUG
+# ============================================
+*.log
+logs/
+*.log.*
+error_log
+debug.log
+php_errors.log
+npm-debug.log
+yarn-error.log
+
+# ============================================
+# BUILDS E COMPILADOS
+# ============================================
+*.min.js
+*.min.css
+*.map
+*.bundle.js
+*.chunk.js
+
+# ============================================
+# TESTES
+# ============================================
+coverage/
+.nyc_output/
+*.lcov
+.phpunit.result.cache
+phpunit.xml
+tests/_output/
+
+# ============================================
+# DEPENDÊNCIAS E PACKAGE MANAGERS
+# ============================================
+
+# NPM
+package-lock.json
+npm-shrinkwrap.json
+
+# Yarn
+yarn.lock
+.yarn/
+.yarn-integrity
+
+# PNPM
+pnpm-lock.yaml
+.pnpm-debug.log
+
+# ============================================
+# HOSPEDAGEM E DEPLOYss
+# ============================================
+
+# Vercel
+.vercel
+.vercel.json
+
+# Railway
+railway.json
+.railway/
+
+# Netlify
+.netlify/
+
+# Heroku
+*.heroku
+
+# ============================================
+# CERTIFICADOS E CHAVES
+# ============================================
+*.pem
+*.key
+*.cert
+*.crt
+*.p12
+*.pfx
+ssl/
+
+# ============================================
+# ARQUIVOS TEMPORÁRIOS
+# ============================================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
+.temp/
+
+# ============================================
+# DOCUMENTAÇÃO GERADA
+# ============================================
+docs/_build/
+site/
+
+# ============================================
+# OUTROS
+# ============================================
+*.zip
+*.tar
+*.tar.gz
+*.rar
+*.7z
+
+# Arquivos de backup do editor
+*~
+*.orig
+*.rej
+
+# Arquivos de patches
+*.patch
+*.diff
+config/*firebase*.json
+*-firebase-adminsdk-*.json
+
+config/*firebase*.json
