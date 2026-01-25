@@ -5,7 +5,7 @@ node_modules
 Composer-Setup.exe# ============================================
 # ARQUIVOS DE CONFIGURAÇÃO SENSÍVEIS
 # ============================================
-.env
+.env        
 .env.local
 .env.production
 .env.development
