@@ -1,72 +1,55 @@
-// Firebase configuration
+// config/firebase.js
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.8.0/firebase-app.js";
+import { 
+    getAuth, 
+    GoogleAuthProvider, 
+    signInWithPopup, 
+    signOut, 
+    onAuthStateChanged 
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-auth.js";
+import { 
+    getFirestore, 
+    collection, 
+    addDoc, 
+    getDocs, 
+    doc, 
+    getDoc, 
+    updateDoc, 
+    deleteDoc,
+    query,
+    where 
+} from "https://www.gstatic.com/firebasejs/10.8.0/firebase-firestore.js";
+
+// ⚠️ COLE AQUI AS CREDENCIAIS QUE VOCÊ COPIOU NO PASSO 2
 const firebaseConfig = {
-  apiKey: "AIzaSyC3aNPjWDUdanjUZRB_WOzHIqTeg771Cgc",
-  authDomain: "samptech-fc9a4.firebaseapp.com",
-  projectId: "samptech-fc9a4",
-  storageBucket: "samptech-fc9a4.firebasestorage.app",
-  messagingSenderId: "548249646574",
-  appId: "1:548249646574:web:2315e21776e1c087efcaff"
+  apiKey: "AIzaSyANDZLnB1Ta50MUm6EzRvbfh4e0a4gjfts",
+  authDomain: "samptech-e5d45.firebaseapp.com",
+  projectId: "samptech-e5d45",
+  storageBucket: "samptech-e5d45.firebasestorage.app",
+  messagingSenderId: "97076231380",
+  appId: "1:97076231380:web:0a28b9ff86852d24408f41"
 };
+// Inicializar Firebase
+const app = initializeApp(firebaseConfig);
+const auth = getAuth(app);
+const db = getFirestore(app);
+const googleProvider = new GoogleAuthProvider();
 
-// Initialize Firebase
-firebase.initializeApp(firebaseConfig);
-
-// Google login function
-function handleGoogleLogin() {
-    const provider = new firebase.auth.GoogleAuthProvider();
-    provider.setCustomParameters({
-        prompt: 'select_account'
-    });
-    
-    firebase.auth().signInWithPopup(provider)
-        .then((result) => {
-            const user = result.user;
-            return user.getIdToken();
-        })
-        .then((idToken) => {
-            // Send to backend
-            fetch('../api/login-google-simple.php', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({
-                    idToken: idToken,
-                    user: {
-                        uid: firebase.auth().currentUser.uid,
-                        email: firebase.auth().currentUser.email,
-                        displayName: firebase.auth().currentUser.displayName,
-                        photoURL: firebase.auth().currentUser.photoURL
-                    }
-                })
-            })
-            .then(response => response.json())
-            .then(data => {
-                if (data.success) {
-                    window.location.href = 'minha-conta.php';
-                } else {
-                    alert('Erro no login: ' + (data.message || 'Erro desconhecido'));
-                }
-            })
-            .catch(error => {
-                console.error('Error:', error);
-                alert('Erro de conexão');
-            });
-        })
-        .catch((error) => {
-            console.error('Google login error:', error);
-            if (error.code === 'auth/popup-closed-by-user') {
-                // User closed popup, do nothing
-                return;
-            }
-            alert('Erro no login com Google');
-        });
-}
-
-// Add event listener
-document.addEventListener('DOMContentLoaded', function() {
-    const googleLoginBtn = document.getElementById('google-login-btn');
-    if (googleLoginBtn) {
-        googleLoginBtn.addEventListener('click', handleGoogleLogin);
-    }
-});
+// Exportar para usar em outros arquivos
+export { 
+    auth, 
+    db, 
+    googleProvider, 
+    signInWithPopup, 
+    signOut, 
+    onAuthStateChanged,
+    collection,
+    addDoc,
+    getDocs,
+    doc,
+    getDoc,
+    updateDoc,
+    deleteDoc,
+    query,
+    where
+};

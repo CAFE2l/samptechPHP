@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Firebase - Login Google</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            text-align: center;
+            background: #f5f5f5;
+        }
+        button {
+            background: #4285f4;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            font-size: 16px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 10px;
+        }
+        button:hover {
+            background: #357ae8;
+        }
+        .logout {
+            background: #dc3545;
+        }
+        .logout:hover {
+            background: #c82333;
+        }
+        .user-info {
+            background: white;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        .user-info img {
+            border-radius: 50%;
+            width: 80px;
+            height: 80px;
+        }
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔥 Teste de Login com Firebase</h1>
+    
+    <div id="loginSection">
+        <p>Clique no botão para fazer login com sua conta Google:</p>
+        <button id="loginBtn">
+            <i class="fab fa-google"></i> Login com Google
+        </button>
+    </div>
+    
+    <div id="userSection" class="hidden">
+        <div class="user-info">
+            <img id="userPhoto" src="" alt="Foto do usuário">
+            <h2 id="userName"></h2>
+            <p id="userEmail"></p>
+        </div>
+        <button class="logout" id="logoutBtn">Sair</button>
+    </div>
+    
+    <div id="status"></div>
+
+    <script type="module">
+        import { 
+            auth, 
+            googleProvider, 
+            signInWithPopup, 
+            signOut, 
+            onAuthStateChanged 
+        } from './js/firebase.js';
+
+        const loginBtn = document.getElementById('loginBtn');
+        const logoutBtn = document.getElementById('logoutBtn');
+        const loginSection = document.getElementById('loginSection');
+        const userSection = document.getElementById('userSection');
+        const status = document.getElementById('status');
+
+        // Login com Google
+        loginBtn.addEventListener('click', async () => {
+            try {
+                const result = await signInWithPopup(auth, googleProvider);
+                console.log('✅ Login realizado:', result.user);
+                status.innerHTML = '<p style="color: green;">✅ Login realizado com sucesso!</p>';
+            } catch (error) {
+                console.error('❌ Erro no login:', error);
+                status.innerHTML = `<p style="color: red;">❌ Erro: ${error.message}</p>`;
+            }
+        });
+
+        // Logout
+        logoutBtn.addEventListener('click', async () => {
+            try {
+                await signOut(auth);
+                console.log('✅ Logout realizado');
+                status.innerHTML = '<p style="color: green;">✅ Logout realizado!</p>';
+            } catch (error) {
+                console.error('❌ Erro no logout:', error);
+            }
+        });
+
+        // Observar mudanças no estado de autenticação
+        onAuthStateChanged(auth, (user) => {
+            if (user) {
+                // Usuário logado
+                loginSection.classList.add('hidden');
+                userSection.classList.remove('hidden');
+                
+                document.getElementById('userPhoto').src = user.photoURL || '';
+                document.getElementById('userName').textContent = user.displayName || 'Sem nome';
+                document.getElementById('userEmail').textContent = user.email || '';
+                
+                console.log('👤 Usuário logado:', {
+                    uid: user.uid,
+                    email: user.email,
+                    name: user.displayName
+                });
+            } else {
+                // Usuário não logado
+                loginSection.classList.remove('hidden');
+                userSection.classList.add('hidden');
+                console.log('👤 Nenhum usuário logado');
+            }
+        });
+    </script>
+</body>
+</html>
