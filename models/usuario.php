@@ -4,7 +4,7 @@ class Usuario {
     private $table_name = "usuarios";
     
     public function __construct() {
-        require_once __DIR__ . '/../config/database.php';
+        require_once __DIR__ . '/../config.php';
         global $pdo;
         $this->conn = $pdo;
     }

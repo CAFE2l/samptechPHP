@@ -1,10 +1,10 @@
 <?php
 // Incluir configuração de sessão (agora pelo header.php)
-require_once '../includes/header.php'; // ← header.php já inclui session.php
+require_once '../config/session.php';
 
 
 // Incluir configuração e modelos
-require_once '../config/database.php';
+require_once '../config.php';
 require_once '../models/Usuario.php';
 
 $erro = '';
