@@ -11,12 +11,12 @@ $usuario_id = $_SESSION['usuario_id'];
 
 // Get all expenses (services + products)
 try {
-    // Services
+    // Services - include all statuses like minha-conta.php does
     $stmt = $pdo->prepare("
-        SELECT a.id, s.nome, a.valor_orcamento as valor, a.data_agendamento as data, 'Serviço' as tipo
+        SELECT a.id, s.nome, a.valor_orcamento as valor, a.data_agendamento as data, 'Serviço' as tipo, a.status
         FROM agendamentos a
         JOIN servicos s ON a.servico_id = s.id
-        WHERE a.usuario_id = ? AND a.status IN ('concluido', 'confirmado')
+        WHERE a.usuario_id = ?
         ORDER BY a.data_agendamento DESC
     ");
     $stmt->execute([$usuario_id]);
