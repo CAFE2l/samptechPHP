@@ -1,7 +1,7 @@
 <?php
 // api/schedule_service.php - Schedule service and save to database
 require_once '../config/session.php';
-require_once '../config/database.php';
+require_once '../config.php';
 require_once '../models/Pedido.php';
 
 header('Content-Type: application/json');

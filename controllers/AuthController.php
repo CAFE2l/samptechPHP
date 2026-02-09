@@ -25,7 +25,7 @@ class AuthController {
     }
     
     public function login($email, $senha) {
-        require_once __DIR__ . '/../config/database.php';
+        require_once __DIR__ . '/../config.php';
         require_once __DIR__ . '/../models/Usuario.php';
         
         $usuarioModel = new \Usuario();

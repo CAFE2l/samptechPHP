@@ -39,6 +39,22 @@ class Servico {
         return [];
     }
     
+    public function listarAtivos() {
+        $sql = "SELECT * FROM " . $this->table_name . " WHERE ativo = 1 ORDER BY nome";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        
+        return ['success' => true, 'servicos' => $stmt->fetchAll(PDO::FETCH_ASSOC)];
+    }
+    
+    public function listarCategorias() {
+        $sql = "SELECT DISTINCT categoria FROM " . $this->table_name . " WHERE ativo = 1 AND categoria IS NOT NULL ORDER BY categoria";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->execute();
+        
+        return ['success' => true, 'categorias' => $stmt->fetchAll(PDO::FETCH_COLUMN)];
+    }
+    
     public function buscarPorId($id) {
         $sql = "SELECT * FROM " . $this->table_name . " WHERE id = :id";
         $stmt = $this->conn->prepare($sql);

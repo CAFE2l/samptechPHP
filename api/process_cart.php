@@ -1,7 +1,7 @@
 <?php
 // api/process_cart.php - Process cart items and separate products/services
 require_once '../config/session.php';
-require_once '../config/database.php';
+require_once '../config.php';
 
 header('Content-Type: application/json');
 

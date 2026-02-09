@@ -16,7 +16,7 @@ $usuario_email = $usuario_logado ? $_SESSION['usuario_email'] : '';
 $usuario_foto = '';
 if ($usuario_logado && isset($_SESSION['usuario_id'])) {
     try {
-        require_once __DIR__ . '/config/database.php';
+        require_once __DIR__ . '/config.php';
         require_once __DIR__ . '/models/usuario.php';
         $usuarioModel = new Usuario();
         $userData = $usuarioModel->buscarPorId($_SESSION['usuario_id']);

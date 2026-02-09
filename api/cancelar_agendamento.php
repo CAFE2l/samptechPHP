@@ -1,7 +1,7 @@
 <?php
 // api/cancelar_agendamento.php
 
-require_once '../config/database.php';
+require_once '../config.php';
 require_once '../models/Agendamento.php';
 
 session_start();

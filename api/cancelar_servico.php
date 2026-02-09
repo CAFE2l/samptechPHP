@@ -19,7 +19,7 @@ if (!$id) {
 }
 
 // Incluir banco de dados
-require_once '../config/database.php';
+require_once '../config.php';
 
 try {
     $database = new Database();

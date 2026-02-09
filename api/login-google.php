@@ -3,7 +3,7 @@ header('Content-Type: application/json');
 ob_start();
 
 try {
-    require_once __DIR__ . '/../config/database.php';
+    require_once __DIR__ . '/../config.php';
     require_once __DIR__ . '/../models/Usuario.php';
     require_once __DIR__ . '/../config/session.php';
     
