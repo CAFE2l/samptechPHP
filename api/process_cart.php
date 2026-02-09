@@ -1,5 +1,8 @@
 <?php
 // api/process_cart.php - Process cart items and separate products/services
+error_reporting(0);
+ini_set('display_errors', 0);
+
 require_once '../config/session.php';
 require_once '../config.php';
 

@@ -1,5 +1,14 @@
-    <?php
+<?php
 session_start();
+require_once '../config.php';
+
+// Get services from database
+try {
+    $stmt = $pdo->query("SELECT * FROM servicos WHERE ativo = 1 ORDER BY categoria, nome");
+    $servicos_db = $stmt->fetchAll(PDO::FETCH_ASSOC);
+} catch (PDOException $e) {
+    $servicos_db = [];
+}
 
 // Inicializar carrinho se não existir
 if (!isset($_SESSION['cart'])) {
@@ -486,7 +495,7 @@ $services = [
                 <!-- Contador de serviços -->
                 <div class="flex justify-center space-x-12 text-center fade-in-up" style="animation-delay: 0.3s;">
                     <div>
-                        <div class="text-4xl font-black text-white mb-2"><?php echo count($services); ?></div>
+                        <div class="text-4xl font-black text-white mb-2"><?php echo count($servicos_db); ?></div>
                         <div class="text-gray-400">Serviços Disponíveis</div>
                     </div>
                     <div>
@@ -522,62 +531,57 @@ $services = [
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
                 <?php 
                 $delay = 0.1;
-                foreach ($services as $key => $service): 
+                foreach ($servicos_db as $servico): 
+                    $icon_map = [
+                        'Manutenção' => 'fas fa-desktop',
+                        'Hardware' => 'fas fa-tools',
+                        'Software' => 'fas fa-laptop-code',
+                        'Reparo' => 'fas fa-wrench',
+                        'Montagem' => 'fas fa-computer'
+                    ];
+                    $icon = $icon_map[$servico['categoria']] ?? 'fas fa-tools';
                 ?>
                 <div class="service-card bg-gradient-to-b from-gray-900 to-black rounded-2xl p-6 fade-in-up" 
-                     data-category="<?php echo $key; ?>"
+                     data-category="<?php echo strtolower($servico['categoria']); ?>"
                      style="animation-delay: <?php echo $delay; ?>s">
                     <div class="flex flex-col h-full">
                         <!-- Ícone e título -->
                         <div class="flex items-start mb-6">
                             <div class="w-16 h-16 bg-gradient-to-br from-gray-800 to-gray-900 rounded-xl flex items-center justify-center mr-4">
-                                <i class="<?php echo $service['icon']; ?> text-2xl text-gray-300"></i>
+                                <i class="<?php echo $icon; ?> text-2xl text-gray-300"></i>
                             </div>
                             <div>
-                                <h3 class="text-xl font-bold text-white mb-2"><?php echo $service['name']; ?></h3>
+                                <h3 class="text-xl font-bold text-white mb-2"><?php echo htmlspecialchars($servico['nome']); ?></h3>
                                 <div class="text-2xl font-black text-white">
-                                    R$ <?php echo number_format($service['price'], 2, ',', '.'); ?>
+                                    R$ <?php echo number_format($servico['preco'], 2, ',', '.'); ?>
                                 </div>
                             </div>
                         </div>
                         
                         <!-- Descrição -->
                         <p class="text-gray-300 mb-6 flex-grow">
-                            <?php echo $service['description']; ?>
+                            <?php echo htmlspecialchars($servico['descricao']); ?>
                         </p>
                         
-                        <!-- Recursos -->
-                        <ul class="space-y-2 mb-6">
-                            <?php foreach (array_slice($service['features'], 0, 3) as $feature): ?>
-                            <li class="flex items-start">
-                                <i class="fas fa-check text-green-400 mr-2 mt-1"></i>
-                                <span class="text-gray-300 text-sm"><?php echo $feature; ?></span>
-                            </li>
-                            <?php endforeach; ?>
-                        </ul>
+                        <!-- Info adicional -->
+                        <div class="mb-6 space-y-2">
+                            <div class="flex items-center text-gray-400 text-sm">
+                                <i class="fas fa-clock mr-2"></i>
+                                <span><?php echo htmlspecialchars($servico['tempo_estimado']); ?></span>
+                            </div>
+                            <div class="flex items-center text-gray-400 text-sm">
+                                <i class="fas fa-shield-alt mr-2"></i>
+                                <span>Garantia: <?php echo htmlspecialchars($servico['garantia']); ?></span>
+                            </div>
+                        </div>
                         
-                        <!-- Botões -->
-                        <div class="flex space-x-4 mt-auto">
-                            <form method="POST" action="" class="flex-grow">
-                                <input type="hidden" name="service_id" value="<?php echo $key; ?>">
-                                <input type="hidden" name="service_name" value="<?php echo htmlspecialchars($service['name']); ?>">
-                                <input type="hidden" name="service_price" value="<?php echo $service['price']; ?>">
-                                <input type="hidden" name="service_description" value="<?php echo htmlspecialchars($service['description']); ?>">
-                                <input type="hidden" name="service_category" value="<?php echo $key; ?>">
-                                
-                                <button type="submit" 
-                                        name="add_to_cart"
-                                        class="add-to-cart-btn w-full bg-white text-black py-3 rounded-lg font-bold hover:bg-gray-200 smooth-transition flex items-center justify-center">
-                                    <i class="fas fa-cart-plus mr-2"></i>
-                                    Adicionar ao Carrinho
-                                </button>
-                            </form>
-                            
-                            <button class="view-details-btn px-4 border border-gray-700 text-gray-300 rounded-lg hover:border-white hover:text-white smooth-transition tooltip" 
-                                    data-service="<?php echo $key; ?>"
-                                    data-tooltip="Ver detalhes">
-                                <i class="fas fa-eye"></i>
-                            </button>
+                        <!-- Botão -->
+                        <div class="mt-auto">
+                            <a href="agendar.php?servico_id=<?php echo $servico['id']; ?>" 
+                               class="add-to-cart-btn w-full bg-white text-black py-3 rounded-lg font-bold hover:bg-gray-200 smooth-transition flex items-center justify-center">
+                                <i class="fas fa-calendar-check mr-2"></i>
+                                Agendar Serviço
+                            </a>
                         </div>
                     </div>
                 </div>
