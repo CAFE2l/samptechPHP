@@ -257,12 +257,12 @@ require_once '../header.php';
 <script>
     // Firebase configuration
     const firebaseConfig = {
-        apiKey: "AIzaSyC3aNPjWDUdanjUZRB_WOzHIqTeg771Cgc",
-        authDomain: "samptech-fc9a4.firebaseapp.com",
-        projectId: "samptech-fc9a4",
-        storageBucket: "samptech-fc9a4.firebasestorage.app",
-        messagingSenderId: "548249646574",
-        appId: "1:548249646574:web:2315e21776e1c087efcaff"
+        apiKey: "AIzaSyANDZLnB1Ta50MUm6EzRvbfh4e0a4gjfts",
+        authDomain: "samptech-e5d45.firebaseapp.com",
+        projectId: "samptech-e5d45",
+        storageBucket: "samptech-e5d45.firebasestorage.app",
+        messagingSenderId: "97076231380",
+        appId: "1:97076231380:web:0a28b9ff86852d24408f41"
     };
     
     // Initialize Firebase

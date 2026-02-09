@@ -1,5 +1,15 @@
 RewriteEngine On
 
+# Headers de segurança
+<IfModule mod_headers.c>
+    Header set Cross-Origin-Opener-Policy "same-origin-allow-popups"
+</IfModule>
+
+# Permitir CSS e JS
+<FilesMatch "\.(css|js)$">
+    Header set Access-Control-Allow-Origin "*"
+</FilesMatch>
+
 # Redirecionar HTTP para HTTPS (se tiver SSL)
 # RewriteCond %{HTTPS} off
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}/$1 [R=301,L]
