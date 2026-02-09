@@ -25,7 +25,6 @@ DirectoryIndex pages/index.php
 # Proteger diretórios sensíveis
 RedirectMatch 403 ^/config/?$
 RedirectMatch 403 ^/models/?$
-RedirectMatch 403 ^/api/?$
 
 # Erros personalizados
 ErrorDocument 404 /pages/404.php

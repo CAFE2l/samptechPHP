@@ -463,7 +463,7 @@ $titulo_pagina = "SampTech - Assistência Técnica Profissional";
                             Criar Conta Gratuita
                         </a>
                     <?php else: ?>
-                        <a href="minha-conta.php" class="inline-flex items-center justify-center border-2 border-gray-600 text-white px-8 py-4 text-lg font-semibold hover:border-white smooth-transition rounded-lg">
+                        <a href="./pages/minha-conta.php" class="inline-flex items-center justify-center border-2 border-gray-600 text-white px-8 py-4 text-lg font-semibold hover:border-white smooth-transition rounded-lg">
                             <i class="fas fa-user-circle mr-3"></i>
                             Minha Conta
                         </a>

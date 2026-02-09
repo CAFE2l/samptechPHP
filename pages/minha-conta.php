@@ -216,7 +216,7 @@ require_once '../header.php';
                 </div>
                 <h3 class="font-semibold mb-2">Total Gasto</h3>
                 <p class="text-gray-400 text-sm mb-4">Total: R$ <?php echo number_format($valor_total_gasto, 2, ',', '.'); ?></p>
-                <a href="#" class="text-gray-300 hover:text-white text-sm font-medium">
+                <a href="gastos.php" class="text-gray-300 hover:text-white text-sm font-medium">
                     Ver detalhes →
                 </a>
             </div>

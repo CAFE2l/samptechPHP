@@ -351,7 +351,4 @@ require_once '../header.php';
     });
 </script>
 
-
-
-</body>
-</html>
+<?php require_once '../footer.php'; ?>
