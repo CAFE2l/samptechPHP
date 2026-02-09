@@ -32,11 +32,11 @@ $servicos = $agendamentos_result['agendamentos'] ?? [];
 // Calculate real statistics
 $total_pedidos = count($pedidos);
 $total_servicos = count($servicos);
-$servicos_ativos = count(array_filter($servicos, fn($s) => in_array($s['status'], ['agendado', 'em_andamento'])));
+$servicos_ativos = count(array_filter($servicos, fn($s) => in_array($s['status'], ['agendado', 'em_andamento', 'pendente', 'confirmado'])));
 $pedidos_processando = count(array_filter($pedidos, fn($p) => $p['status'] === 'processando'));
 $pedidos_entregues = count(array_filter($pedidos, fn($p) => in_array($p['status'], ['concluido', 'entregue'])));
 $valor_total_pedidos = array_sum(array_column($pedidos, 'total'));
-$valor_total_servicos = array_sum(array_column($servicos, 'preco'));
+$valor_total_servicos = array_sum(array_map(fn($s) => $s['valor_orcamento'] ?? 0, $servicos));
 $valor_total_gasto = $valor_total_pedidos + $valor_total_servicos;
 
 // Get recent activities (combine orders and services)
@@ -53,10 +53,10 @@ foreach ($pedidos as $pedido) {
 foreach ($servicos as $servico) {
     $recentActivities[] = [
         'type' => 'servico',
-        'title' => $servico['tipo_servico'],
+        'title' => $servico['servico_nome'] ?? 'Serviço',
         'status' => ucfirst(str_replace('_', ' ', $servico['status'])),
         'date' => $servico['data_agendamento'],
-        'value' => $servico['preco']
+        'value' => $servico['valor_orcamento'] ?? 0
     ];
 }
 

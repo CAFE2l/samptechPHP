@@ -56,5 +56,40 @@ class Agendamento {
         
         return ['success' => true, 'horarios' => $horarios];
     }
+    
+    public function criar($dados) {
+        try {
+            $query = "INSERT INTO " . $this->table_name . " 
+                     (usuario_id, servico_id, data_agendamento, descricao_problema, 
+                      status, valor_orcamento, observacoes, status_pagamento) 
+                      VALUES 
+                     (:usuario_id, :servico_id, :data_agendamento, :descricao_problema, 
+                      'pendente', :valor_orcamento, :observacoes, 'pendente')";
+
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindParam(":usuario_id", $dados['usuario_id']);
+            $stmt->bindParam(":servico_id", $dados['servico_id']);
+            $stmt->bindParam(":data_agendamento", $dados['data_agendamento']);
+            $stmt->bindParam(":descricao_problema", $dados['descricao_problema']);
+            $stmt->bindParam(":valor_orcamento", $dados['valor_orcamento']);
+            $stmt->bindParam(":observacoes", $dados['observacoes']);
+
+            if ($stmt->execute()) {
+                return [
+                    'success' => true,
+                    'id' => $this->conn->lastInsertId(),
+                    'message' => 'Agendamento criado com sucesso!'
+                ];
+            } else {
+                return ['success' => false, 'message' => 'Erro ao criar agendamento.'];
+            }
+        } catch (PDOException $e) {
+            return ['success' => false, 'message' => 'Erro no sistema: ' . $e->getMessage()];
+        }
+    }
+    
+    public function verificarPromocao($codigo) {
+        return ['success' => false, 'message' => 'Cupom inválido'];
+    }
 }
 ?>
