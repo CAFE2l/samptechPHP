@@ -387,8 +387,8 @@ require_once '../header.php';
                                         <?php if($horario_selecionado): ?>
                                             <div class="mt-8 pt-8 border-t border-gray-800">
                                                 <a href="agendar.php?passo=3&servico_id=<?php echo $servico_id; ?>&data=<?php echo $data_agendamento; ?>&horario=<?php echo $horario_selecionado; ?>" 
-                                                   class="btn-primary w-full py-4 text-lg">
-                                                    <i class="fas fa-arrow-right mr-2"></i>
+                                                   class="block w-full py-5 text-xl font-bold text-center bg-gradient-to-r from-white to-gray-200 text-black rounded-2xl hover:from-gray-100 hover:to-white transition-all duration-300 shadow-lg animate-pulse">
+                                                    <i class="fas fa-arrow-right mr-3 text-xl"></i>
                                                     Continuar para Confirmação
                                                 </a>
                                             </div>
