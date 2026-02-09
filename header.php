@@ -460,16 +460,6 @@ $pagina_atual = basename($_SERVER['PHP_SELF']);
                     </div>
                 <?php endif; ?>
                 
-                <!-- Carrinho -->
-                <button class="relative group" id="cartButton">
-                    <div class="w-10 h-10 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full border border-gray-700 flex items-center justify-center hover:border-white transition-all duration-300">
-                        <i class="fas fa-shopping-cart text-lg text-gray-300 group-hover:text-white transition-colors"></i>
-                    </div>
-                    <?php if ($cart_count > 0): ?>
-                    <span class="absolute -top-2 -right-2 w-6 h-6 bg-white text-black rounded-full text-xs font-bold flex items-center justify-center animate-pulse"><?php echo $cart_count; ?></span>
-                    <?php endif; ?>
-                </button>
-                
                 <!-- Menu Mobile -->
                 <button class="lg:hidden text-gray-300 hover:text-white smooth-transition" id="mobileMenuToggle">
                     <i class="fas fa-bars text-2xl"></i>

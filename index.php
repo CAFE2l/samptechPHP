@@ -370,14 +370,6 @@ $titulo_pagina = "SampTech - Assistência Técnica Profissional";
                     </div>
                 <?php endif; ?>
                 
-                <!-- Carrinho -->
-                <button class="relative" id="cartButton">
-                    <i class="fas fa-shopping-cart text-xl text-gray-300 hover:text-white smooth-transition"></i>
-                    <?php if (count($_SESSION['cart']) > 0): ?>
-                    <span class="cart-badge"><?php echo count($_SESSION['cart']); ?></span>
-                    <?php endif; ?>
-                </button>
-                
                 <!-- Menu Mobile -->
                 <button class="lg:hidden text-gray-300 hover:text-white smooth-transition" id="mobileMenuToggle">
                     <i class="fas fa-bars text-2xl"></i>
@@ -929,9 +921,6 @@ $titulo_pagina = "SampTech - Assistência Técnica Profissional";
         const mobileMenu = document.getElementById('mobileMenu');
         const mobileMenuToggle = document.getElementById('mobileMenuToggle');
         const closeMobileMenu = document.getElementById('closeMobileMenu');
-        const cartSidebar = document.getElementById('cartSidebar');
-        const cartButton = document.getElementById('cartButton');
-        const closeCart = document.querySelector('.close-cart');
         
         // Menu Mobile
         mobileMenuToggle.addEventListener('click', () => {
