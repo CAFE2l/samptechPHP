@@ -36,10 +36,7 @@ $categorias = $resultadoCategorias['success'] ? $resultadoCategorias['categorias
 // Buscar serviço específico se selecionado
 $servico_selecionado = null;
 if ($servico_id > 0) {
-    $resultado = $servicoModel->buscarPorId($servico_id);
-    if ($resultado['success']) {
-        $servico_selecionado = $resultado['servico'];
-    }
+    $servico_selecionado = $servicoModel->buscarPorId($servico_id);
 }
 
 // Buscar horários disponíveis
@@ -237,7 +234,7 @@ require_once '../header.php';
                                             <div class="mb-4">
                                                 <div class="flex items-center text-gray-400 mb-1">
                                                     <i class="fas fa-clock mr-2"></i>
-                                                    <span class="text-sm"><?php echo htmlspecialchars($servico['duracao_estimada']); ?></span>
+                                                    <span class="text-sm"><?php echo htmlspecialchars($servico['tempo_estimado'] ?? 'A definir'); ?></span>
                                                 </div>
                                                 <div class="flex items-center text-gray-400">
                                                     <i class="fas fa-shield-alt mr-2"></i>
@@ -292,7 +289,7 @@ require_once '../header.php';
                                             <div class="flex items-center space-x-4">
                                                 <div class="flex items-center text-gray-300">
                                                     <i class="fas fa-clock mr-2"></i>
-                                                    <span><?php echo htmlspecialchars($servico_selecionado['duracao_estimada']); ?></span>
+                                                    <span><?php echo htmlspecialchars($servico_selecionado['tempo_estimado'] ?? 'A definir'); ?></span>
                                                 </div>
                                                 <div class="flex items-center text-gray-300">
                                                     <i class="fas fa-shield-alt mr-2"></i>
@@ -459,7 +456,7 @@ require_once '../header.php';
                                                 </div>
                                                 <div class="flex justify-between">
                                                     <span class="text-gray-400">Duração:</span>
-                                                    <span class="text-white font-medium"><?php echo htmlspecialchars($servico_selecionado['duracao_estimada']); ?></span>
+                                                    <span class="text-white font-medium"><?php echo htmlspecialchars($servico_selecionado['tempo_estimado'] ?? 'A definir'); ?></span>
                                                 </div>
                                             </div>
                                         </div>

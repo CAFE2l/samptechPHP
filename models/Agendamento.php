@@ -46,5 +46,15 @@ class Agendamento {
             ];
         }
     }
+    
+    public function buscarHorariosDisponiveis($data = null) {
+        // Generate available time slots (8am to 6pm, every hour)
+        $horarios = [];
+        for ($h = 8; $h <= 18; $h++) {
+            $horarios[] = ['hora' => sprintf('%02d:00:00', $h), 'disponivel' => true];
+        }
+        
+        return ['success' => true, 'horarios' => $horarios];
+    }
 }
 ?>
