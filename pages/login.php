@@ -5,7 +5,7 @@
 require_once '../config/session.php';
 
 // Incluir configuração e modelos
-require_once '../config/database.php';
+require_once '../config.php';
 require_once '../models/Usuario.php';
 
 // Inicializar array de erros e mensagens
@@ -87,7 +87,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 
 // Título da página
 $titulo_pagina = "Login - SampTech";
-require_once '../includes/header.php';
+require_once '../header.php';
 ?>
 
 <!-- Conteúdo principal -->
