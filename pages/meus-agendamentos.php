@@ -4,7 +4,7 @@
 require_once '../includes/auth_check.php';
 verificarAutenticacao();
 
-require_once '../config/database.php';
+require_once '../config.php';
 require_once '../models/Agendamento.php';
 
 $agendamentoModel = new Agendamento();

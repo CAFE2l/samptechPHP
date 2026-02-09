@@ -9,7 +9,7 @@ if(!isset($_SESSION['usuario_id']) || !isset($_SESSION['usuario_logado'])) {
 }
 
 // Incluir modelos
-require_once '../config/database.php';
+require_once '../config.php';
 require_once '../models/Servico.php';
 require_once '../models/Agendamento.php';
 

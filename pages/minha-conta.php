@@ -1,7 +1,7 @@
 <?php
 // minha-conta.php - Modern User Dashboard
 require_once '../config/session.php';
-require_once '../config/database.php';
+require_once '../config.php';
 require_once '../models/Usuario.php';
 
 if (!isset($_SESSION['usuario_id'])) {
@@ -20,13 +20,14 @@ if (!$usuario) {
 
 // Get real data from database
 require_once '../models/Pedido.php';
-require_once '../models/Servico.php';
+require_once '../models/Agendamento.php';
 
 $pedidoModel = new Pedido();
-$servicoModel = new Servico();
+$agendamentoModel = new Agendamento();
 
 $pedidos = $pedidoModel->buscarPorUsuario($_SESSION['usuario_id']);
-$servicos = $servicoModel->buscarPorUsuario($_SESSION['usuario_id']);
+$agendamentos_result = $agendamentoModel->listarPorUsuario($_SESSION['usuario_id']);
+$servicos = $agendamentos_result['agendamentos'] ?? [];
 
 // Calculate real statistics
 $total_pedidos = count($pedidos);

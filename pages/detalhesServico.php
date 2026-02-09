@@ -4,7 +4,7 @@
 require_once '../controllers/AuthController.php';
 // verificarAutenticacao();
 
-require_once '../config/database.php';
+require_once '../config.php';
 require_once '../models/Agendamento.php';
 
 $id = $_GET['id'] ?? null;

@@ -1,6 +1,6 @@
 <?php
 // carrinho.php - Página do Carrinho de Compras
-require_once '../config/database.php';
+require_once '../config.php';
 session_start();
 
 // Inicializar carrinho se não existir

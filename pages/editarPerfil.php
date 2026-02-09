@@ -16,7 +16,7 @@ $sucesso = false;
 
 // Handle profile photo upload
 if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_FILES['profile_photo']) && $_FILES['profile_photo']['error'] === UPLOAD_ERR_OK) {
-    require_once '../config/database.php';
+    require_once '../config.php';
     require_once '../models/Usuario.php';
     
     $uploadDir = '../uploads/profiles/';
@@ -91,7 +91,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $erro = "A nova senha deve ter pelo menos 6 caracteres.";
             } else {
                 // Verify current password with database
-                require_once '../config/database.php';
+                require_once '../config.php';
                 require_once '../models/Usuario.php';
                 
                 $usuarioModel = new Usuario();
@@ -188,7 +188,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                             <div class="relative">
                                 <div class="w-24 h-24 bg-gradient-to-br from-gray-800 to-gray-900 rounded-full flex items-center justify-center text-2xl font-bold text-white shadow-lg">
                                     <?php 
-                                    require_once '../config/database.php';
+                                    require_once '../config.php';
                                     require_once '../models/Usuario.php';
                                     $usuarioModel = new Usuario();
                                     $userData = $usuarioModel->buscarPorId($_SESSION['usuario_id']);

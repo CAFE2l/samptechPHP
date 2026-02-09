@@ -1,6 +1,6 @@
 <?php
 require_once '../config/session.php';
-require_once '../config/database.php';
+require_once '../config.php';
 require_once '../models/Pedido.php';
 
 if (!isset($_SESSION['usuario_id'])) {
