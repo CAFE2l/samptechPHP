@@ -152,6 +152,11 @@ require_once '../header.php';
                             <a href="editarPerfil.php" class="bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all">
                                 <i class="fas fa-edit mr-2"></i>Editar Perfil
                             </a>
+                            <?php if(isset($usuario['tipo']) && $usuario['tipo'] == 'admin'): ?>
+                            <a href="../admin/dashboard.php" class="bg-gradient-to-r from-gray-700 to-gray-900 text-white px-6 py-3 rounded-xl font-semibold hover:from-gray-600 hover:to-gray-800 transition-all">
+                                <i class="fas fa-crown mr-2"></i>Admin Dashboard
+                            </a>
+                            <?php endif; ?>
                             <a href="agendar.php" class="glass-effect px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition-all">
                                 <i class="fas fa-plus mr-2"></i>Novo Serviço
                             </a>

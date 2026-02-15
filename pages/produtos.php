@@ -69,7 +69,7 @@ require_once '../header.php';
                 </div>
 
                 <!-- Category Badge -->
-                <span class="inline-block px-3 py-1 bg-gray-800 text-gray-300 rounded-full text-xs mb-3">
+                <span class="inline-block px-3 py-1 bg-gra  y-800 text-gray-300 rounded-full text-xs mb-3">
                     <?php echo htmlspecialchars($produto['categoria']); ?>
                 </span>
 
