@@ -85,7 +85,6 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                 <th class="text-left py-3 px-4">Data</th>
                                 <th class="text-left py-3 px-4">Valor</th>
                                 <th class="text-left py-3 px-4">Status</th>
-                                <th class="text-left py-3 px-4">Ações</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -96,7 +95,18 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                     <div class="font-semibold"><?php echo htmlspecialchars($ag['cliente_nome']); ?></div>
                                     <div class="text-sm text-gray-400"><?php echo htmlspecialchars($ag['email']); ?></div>
                                 </td>
-                                <td class="py-3 px-4 text-sm"><?php echo htmlspecialchars($ag['telefone']); ?></td>
+                                <td class="py-3 px-4">
+                                    <div class="flex gap-2">
+                                        <a href="https://wa.me/55<?php echo preg_replace('/\D/', '', $ag['telefone']); ?>" target="_blank" 
+                                           class="bg-green-600 hover:bg-green-700 text-white px-3 py-1 rounded-lg text-sm transition-all" title="WhatsApp">
+                                            <i class="fab fa-whatsapp mr-1"></i><?php echo htmlspecialchars($ag['telefone']); ?>
+                                        </a>
+                                        <a href="mailto:<?php echo htmlspecialchars($ag['email']); ?>" 
+                                           class="bg-gray-700 hover:bg-gray-600 text-white px-3 py-1 rounded-lg text-sm transition-all" title="Email">
+                                            <i class="fas fa-envelope"></i>
+                                        </a>
+                                    </div>
+                                </td>
                                 <td class="py-3 px-4"><?php echo htmlspecialchars($ag['servico_nome']); ?></td>
                                 <td class="py-3 px-4"><?php echo date('d/m/Y H:i', strtotime($ag['data_agendamento'])); ?></td>
                                 <td class="py-3 px-4">R$ <?php echo number_format($ag['valor_orcamento'], 2, ',', '.'); ?></td>
@@ -112,11 +122,6 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                                         </select>
                                         <input type="hidden" name="update_status" value="1">
                                     </form>
-                                </td>
-                                <td class="py-3 px-4">
-                                    <a href="https://wa.me/55<?php echo preg_replace('/\D/', '', $ag['telefone']); ?>" target="_blank" class="text-green-400 hover:text-green-300">
-                                        <i class="fab fa-whatsapp"></i>
-                                    </a>
                                 </td>
                             </tr>
                             <?php endforeach; ?>

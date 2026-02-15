@@ -8,27 +8,35 @@ if(!isset($_SESSION['usuario_id']) || $_SESSION['usuario_tipo'] != 'admin') {
 }
 
 $id = $_GET['id'] ?? 0;
-$stmt = $pdo->prepare("SELECT * FROM servicos WHERE id = ?");
+$stmt = $pdo->prepare("SELECT * FROM produtos WHERE id = ?");
 $stmt->execute([$id]);
-$servico = $stmt->fetch(PDO::FETCH_ASSOC);
+$produto = $stmt->fetch(PDO::FETCH_ASSOC);
 
-if(!$servico) {
-    header('Location: servicos.php');
+if(!$produto) {
+    header('Location: produtos.php');
     exit();
 }
 
 if($_SERVER['REQUEST_METHOD'] == 'POST') {
-    $stmt = $pdo->prepare("UPDATE servicos SET nome = ?, descricao = ?, preco = ?, categoria = ?, garantia = ?, tempo_estimado = ? WHERE id = ?");
+    $imagem = $produto['imagem'];
+    if(isset($_FILES['imagem']) && $_FILES['imagem']['error'] == 0) {
+        $ext = pathinfo($_FILES['imagem']['name'], PATHINFO_EXTENSION);
+        $imagem = 'uploads/produtos/' . uniqid() . '.' . $ext;
+        if(!is_dir('../uploads/produtos')) mkdir('../uploads/produtos', 0777, true);
+        move_uploaded_file($_FILES['imagem']['tmp_name'], '../' . $imagem);
+    }
+    
+    $stmt = $pdo->prepare("UPDATE produtos SET nome = ?, descricao = ?, preco = ?, categoria = ?, estoque = ?, imagem = ? WHERE id = ?");
     $stmt->execute([
         $_POST['nome'],
         $_POST['descricao'],
         $_POST['preco'],
         $_POST['categoria'],
-        $_POST['garantia'],
-        $_POST['tempo_estimado'],
+        $_POST['estoque'],
+        $imagem,
         $id
     ]);
-    header('Location: servicos.php');
+    header('Location: produtos.php');
     exit();
 }
 ?>
@@ -37,7 +45,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Editar Serviço - SampTech Admin</title>
+    <title>Editar Produto - SampTech Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -66,9 +74,13 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <i class="fas fa-calendar"></i>
                 <span>Agendamentos</span>
             </a>
-            <a href="servicos.php" class="flex items-center space-x-3 px-4 py-3 bg-white text-black rounded-xl mb-2 font-semibold">
+            <a href="servicos.php" class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-xl mb-2 transition-all">
                 <i class="fas fa-tools"></i>
                 <span>Serviços</span>
+            </a>
+            <a href="produtos.php" class="flex items-center space-x-3 px-4 py-3 bg-white text-black rounded-xl mb-2 font-semibold">
+                <i class="fas fa-box"></i>
+                <span>Produtos</span>
             </a>
             <a href="usuarios.php" class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-xl mb-2 transition-all">
                 <i class="fas fa-users"></i>
@@ -88,58 +100,57 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
             <!-- Header -->
             <div class="flex items-center justify-between mb-8">
                 <div>
-                    <h2 class="text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent mb-2">Editar Serviço</h2>
-                    <p class="text-gray-400">Atualize as informações do serviço</p>
+                    <h2 class="text-4xl font-bold bg-gradient-to-r from-white to-gray-400 bg-clip-text text-transparent mb-2">Editar Produto</h2>
+                    <p class="text-gray-400">Atualize as informações do produto</p>
                 </div>
-                <a href="servicos.php" class="glass-effect px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition-all">
+                <a href="produtos.php" class="glass-effect px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition-all">
                     <i class="fas fa-arrow-left mr-2"></i>Voltar
                 </a>
             </div>
 
             <!-- Form -->
             <div class="max-w-3xl">
-                <form method="POST" class="glass-effect rounded-2xl p-8">
+                <form method="POST" enctype="multipart/form-data" class="glass-effect rounded-2xl p-8">
                     <div class="space-y-6">
                         <div>
-                            <label class="block text-gray-400 mb-2">Nome do Serviço</label>
-                            <input type="text" name="nome" value="<?php echo htmlspecialchars($servico['nome']); ?>" required
+                            <label class="block text-gray-400 mb-2">Imagem/Vídeo do Produto</label>
+                            <?php if($produto['imagem']): ?>
+                            <div class="mb-2 text-sm text-gray-400">Arquivo atual: <?php echo basename($produto['imagem']); ?></div>
+                            <?php endif; ?>
+                            <input type="file" name="imagem" accept="image/*,video/*"
+                                   class="w-full bg-gray-900 border border-gray-700 text-white py-3 px-4 rounded-xl focus:outline-none focus:border-white">
+                            <p class="text-gray-500 text-sm mt-2">Deixe em branco para manter o arquivo atual</p>
+                        </div>
+
+                        <div>
+                            <label class="block text-gray-400 mb-2">Nome do Produto</label>
+                            <input type="text" name="nome" value="<?php echo htmlspecialchars($produto['nome']); ?>" required
                                    class="w-full bg-gray-900 border border-gray-700 text-white py-3 px-4 rounded-xl focus:outline-none focus:border-white">
                         </div>
 
                         <div>
                             <label class="block text-gray-400 mb-2">Descrição</label>
                             <textarea name="descricao" rows="4" required
-                                      class="w-full bg-gray-900 border border-gray-700 text-white py-3 px-4 rounded-xl focus:outline-none focus:border-white"><?php echo htmlspecialchars($servico['descricao']); ?></textarea>
+                                      class="w-full bg-gray-900 border border-gray-700 text-white py-3 px-4 rounded-xl focus:outline-none focus:border-white"><?php echo htmlspecialchars($produto['descricao']); ?></textarea>
                         </div>
 
-                        <div class="grid grid-cols-2 gap-6">
+                        <div class="grid grid-cols-3 gap-6">
                             <div>
                                 <label class="block text-gray-400 mb-2">Preço (R$)</label>
-                                <input type="number" name="preco" step="0.01" value="<?php echo $servico['preco']; ?>" required
+                                <input type="number" name="preco" step="0.01" value="<?php echo $produto['preco']; ?>" required
                                        class="w-full bg-gray-900 border border-gray-700 text-white py-3 px-4 rounded-xl focus:outline-none focus:border-white">
                             </div>
 
                             <div>
                                 <label class="block text-gray-400 mb-2">Categoria</label>
-                                <input type="text" name="categoria" value="<?php echo htmlspecialchars($servico['categoria']); ?>" required
-                                       class="w-full bg-gray-900 border border-gray-700 text-white py-3 px-4 rounded-xl focus:outline-none focus:border-white">
-                            </div>
-                        </div>
-
-                        <div class="grid grid-cols-2 gap-6">
-                            <div>
-                                <label class="block text-gray-400 mb-2">Tempo Estimado</label>
-                                <input type="text" name="tempo_estimado" value="<?php echo htmlspecialchars($servico['tempo_estimado']); ?>" required
+                                <input type="text" name="categoria" value="<?php echo htmlspecialchars($produto['categoria']); ?>" required
                                        class="w-full bg-gray-900 border border-gray-700 text-white py-3 px-4 rounded-xl focus:outline-none focus:border-white">
                             </div>
 
                             <div>
-                                <label class="block text-gray-400 mb-2">Garantia (máx. 30 dias)</label>
-                                <select name="garantia" required class="w-full bg-gray-900 border border-gray-700 text-white py-3 px-4 rounded-xl focus:outline-none focus:border-white">
-                                    <option value="7 dias" <?php echo $servico['garantia'] == '7 dias' ? 'selected' : ''; ?>>7 dias</option>
-                                    <option value="15 dias" <?php echo $servico['garantia'] == '15 dias' ? 'selected' : ''; ?>>15 dias</option>
-                                    <option value="30 dias" <?php echo $servico['garantia'] == '30 dias' ? 'selected' : ''; ?>>30 dias</option>
-                                </select>
+                                <label class="block text-gray-400 mb-2">Estoque</label>
+                                <input type="number" name="estoque" value="<?php echo $produto['estoque']; ?>" required min="0"
+                                       class="w-full bg-gray-900 border border-gray-700 text-white py-3 px-4 rounded-xl focus:outline-none focus:border-white">
                             </div>
                         </div>
 
@@ -147,7 +158,7 @@ if($_SERVER['REQUEST_METHOD'] == 'POST') {
                             <button type="submit" class="flex-1 bg-white text-black px-6 py-3 rounded-xl font-semibold hover:bg-gray-200 transition-all">
                                 <i class="fas fa-save mr-2"></i>Salvar Alterações
                             </button>
-                            <a href="servicos.php" class="flex-1 text-center glass-effect px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition-all">
+                            <a href="produtos.php" class="flex-1 text-center glass-effect px-6 py-3 rounded-xl font-semibold hover:bg-gray-800 transition-all">
                                 Cancelar
                             </a>
                         </div>
