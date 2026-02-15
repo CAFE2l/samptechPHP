@@ -56,11 +56,12 @@ require_once '../header.php';
         </div>
         <?php else: ?>
         <!-- Products Grid -->
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
             <?php foreach ($produtos as $produto): ?>
             <div class="glass-effect rounded-2xl p-6 hover:bg-gray-900 transition-all product-card" data-categoria="<?php echo strtolower($produto['categoria']); ?>">
+                <a href="produto_detalhes.php?id=<?php echo $produto['id']; ?>" class="block">
                 <!-- Product Image -->
-                <div class="w-full h-48 bg-gray-800 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+                <div class="w-full h-64 bg-gray-800 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
                     <?php if (!empty($produto['imagem']) && file_exists('../' . $produto['imagem'])): ?>
                         <img src="../<?php echo $produto['imagem']; ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-full h-full object-cover">
                     <?php else: ?>
@@ -99,6 +100,7 @@ require_once '../header.php';
                 </div>
 
                 <!-- Price and Action -->
+                </a>
                 <div class="flex items-center justify-between pt-4 border-t border-gray-800">
                     <div class="text-2xl font-bold text-white">
                         R$ <?php echo number_format($produto['preco'], 2, ',', '.'); ?>
@@ -106,8 +108,8 @@ require_once '../header.php';
                     <?php if ($produto['estoque'] > 0): ?>
                         <button onclick="addToCart(<?php echo $produto['id']; ?>, '<?php echo htmlspecialchars($produto['nome']); ?>', <?php echo $produto['preco']; ?>)" 
                                 class="bg-white text-black px-4 py-2 rounded-lg font-semibold hover:bg-gray-200 transition-all">
-                            <i class="fas fa-cart-plus mr-1"></i>
-                            Adicionar
+                            <i class="fas fa-shopping-bag mr-1"></i>
+                            Comprar
                         </button>
                     <?php else: ?>
                         <button disabled class="bg-gray-700 text-gray-500 px-4 py-2 rounded-lg font-semibold cursor-not-allowed">
@@ -155,10 +157,9 @@ function addToCart(id, nome, preco) {
     .then(r => r.json())
     .then(data => {
         if (data.success) {
-            alert('Produto adicionado ao carrinho!');
-            location.reload();
+            window.location.href = 'carrinho.php';
         } else {
-            alert('Erro ao adicionar produto.');
+            alert('Erro ao adicionar ao carrinho');
         }
     });
 }
