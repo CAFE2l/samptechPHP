@@ -18,14 +18,15 @@ if(empty($cart)) {
 }
 
 $data = json_decode(file_get_contents('php://input'), true);
+$metodo = $data['metodo'] ?? 'pix';
 $total = array_sum(array_map(fn($item) => $item['preco'] * $item['quantidade'], $cart));
 
 try {
     $pdo->beginTransaction();
     
     // Create order
-    $stmt = $pdo->prepare("INSERT INTO pedidos (usuario_id, total, status, data_pedido) VALUES (?, ?, 'processando', NOW())");
-    $stmt->execute([$_SESSION['usuario_id'], $total]);
+    $stmt = $pdo->prepare("INSERT INTO pedidos (usuario_id, total, status, metodo_pagamento, data_pedido) VALUES (?, ?, 'processando', ?, NOW())");
+    $stmt->execute([$_SESSION['usuario_id'], $total, $metodo]);
     $pedido_id = $pdo->lastInsertId();
     
     // Add items

@@ -146,7 +146,8 @@ function cancelOrder(orderId) {
             if (data.success) {
                 if(data.whatsapp_url) {
                     console.log('WhatsApp URL:', data.whatsapp_url);
-                    window.location.href = data.whatsapp_url;
+                    window.open(data.whatsapp_url, '_blank');
+                    setTimeout(() => location.reload(), 1000);
                 } else {
                     alert('Pedido cancelado com sucesso!');
                     location.reload();
