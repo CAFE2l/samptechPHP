@@ -128,13 +128,13 @@ require_once '../header.php';
 
 @keyframes checkmark {
     0% {
-        transform: scale(0) rotate(45deg);
+        transform: scale(0);
     }
     50% {
-        transform: scale(1.2) rotate(45deg);
+        transform: scale(1.2);
     }
     100% {
-        transform: scale(1) rotate(45deg);
+        transform: scale(1);
     }
 }
 
@@ -151,7 +151,7 @@ require_once '../header.php';
 <div id="successModal" class="fixed inset-0 bg-black/80 backdrop-blur-sm hidden items-center justify-center z-50">
     <div class="success-modal glass-effect rounded-3xl p-8 max-w-md mx-4 text-center">
         <div class="w-24 h-24 bg-gradient-to-br from-green-500 to-green-700 rounded-full flex items-center justify-center mx-auto mb-6">
-            <div class="checkmark w-12 h-6 border-white border-b-4 border-r-4 transform rotate-45 translate-x-1 -translate-y-1"></div>
+            <i class="fas fa-check text-white text-5xl checkmark"></i>
         </div>
         <h2 class="text-3xl font-bold mb-4">Pedido Confirmado!</h2>
         <p class="text-gray-400 mb-6">Seu pedido foi realizado com sucesso. Você será redirecionado em instantes...</p>

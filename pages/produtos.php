@@ -61,11 +61,13 @@ require_once '../header.php';
             <div class="glass-effect rounded-2xl p-6 hover:bg-gray-900 transition-all product-card" data-categoria="<?php echo strtolower($produto['categoria']); ?>">
                 <a href="produto_detalhes.php?id=<?php echo $produto['id']; ?>" class="block">
                 <!-- Product Image -->
-                <div class="w-full h-64 bg-gray-800 rounded-xl mb-4 flex items-center justify-center overflow-hidden">
+                <div class="w-full h-64 bg-gray-800 rounded-xl mb-4 overflow-hidden">
                     <?php if (!empty($produto['imagem']) && file_exists('../' . $produto['imagem'])): ?>
                         <img src="../<?php echo $produto['imagem']; ?>" alt="<?php echo htmlspecialchars($produto['nome']); ?>" class="w-full h-full object-cover">
                     <?php else: ?>
-                        <i class="fas fa-box text-4xl text-gray-600"></i>
+                        <div class="w-full h-full flex items-center justify-center">
+                            <i class="fas fa-box text-4xl text-gray-600"></i>
+                        </div>
                     <?php endif; ?>
                 </div>
 
