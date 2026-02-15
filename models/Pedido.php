@@ -10,7 +10,14 @@ class Pedido {
     }
     
     public function buscarPorUsuario($usuario_id) {
-        $sql = "SELECT * FROM " . $this->table_name . " WHERE usuario_id = :usuario_id ORDER BY data_pedido DESC";
+        $sql = "SELECT p.*, 
+                (SELECT JSON_ARRAYAGG(JSON_OBJECT('name', pr.nome, 'price', ip.preco_unitario, 'quantity', ip.quantidade))
+                 FROM itens_pedido ip 
+                 JOIN produtos pr ON ip.produto_id = pr.id 
+                 WHERE ip.pedido_id = p.id) as items
+                FROM " . $this->table_name . " p 
+                WHERE p.usuario_id = :usuario_id 
+                ORDER BY p.data_pedido DESC";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindParam(':usuario_id', $usuario_id);
         $stmt->execute();

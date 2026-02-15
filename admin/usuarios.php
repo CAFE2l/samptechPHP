@@ -49,6 +49,10 @@ $usuarios = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <i class="fas fa-tools"></i>
                 <span>Serviços</span>
             </a>
+            <a href="produtos.php" class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-xl mb-2 transition-all">
+                <i class="fas fa-box"></i>
+                <span>Produtos</span>
+            </a>
             <a href="usuarios.php" class="flex items-center space-x-3 px-4 py-3 bg-white text-black rounded-xl mb-2 font-semibold">
                 <i class="fas fa-users"></i>
                 <span>Usuários</span>

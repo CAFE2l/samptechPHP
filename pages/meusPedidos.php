@@ -74,12 +74,13 @@ require_once '../header.php';
                                     </span>
                                     <div class="text-right">
                                         <div class="text-2xl font-bold text-white">R$ <?php echo number_format($pedido['total'], 2, ',', '.'); ?></div>
-                                        <div class="text-sm text-gray-400"><?php echo count($items); ?> item(s)</div>
+                                        <div class="text-sm text-gray-400"><?php echo is_array($items) ? count($items) : 0; ?> item(s)</div>
                                     </div>
                                 </div>
                             </div>
                             
                             <!-- Items -->
+                            <?php if(is_array($items) && !empty($items)): ?>
                             <div class="space-y-3 mb-6">
                                 <?php foreach ($items as $item): ?>
                                     <div class="flex items-center bg-gray-900/50 rounded-xl p-4">
@@ -98,6 +99,7 @@ require_once '../header.php';
                                     </div>
                                 <?php endforeach; ?>
                             </div>
+                            <?php endif; ?>
                             
                             <!-- Order Details -->
                             <div class="grid md:grid-cols-2 gap-6 pt-6 border-t border-gray-800">
@@ -113,9 +115,9 @@ require_once '../header.php';
                             
                             <!-- Actions -->
                             <div class="flex justify-end mt-6 space-x-4">
-                                <?php if ($pedido['status'] === 'pendente'): ?>
+                                <?php if (in_array($pedido['status'], ['processando', 'pendente'])): ?>
                                     <button onclick="cancelOrder(<?php echo $pedido['id']; ?>)" class="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition-all">
-                                        <i class="fas fa-times mr-2"></i>Cancelar
+                                        <i class="fas fa-times mr-2"></i>Cancelar Pedido
                                     </button>
                                 <?php endif; ?>
                                 <button onclick="viewOrderDetails(<?php echo $pedido['id']; ?>)" class="px-4 py-2 bg-gray-700 text-white rounded-lg hover:bg-gray-600 transition-all">
@@ -132,15 +134,19 @@ require_once '../header.php';
 
 <script>
 function cancelOrder(orderId) {
-    if (confirm('Tem certeza que deseja cancelar este pedido?')) {
-        fetch('../api/cancel_order.php', {
+    if (confirm('Tem certeza que deseja cancelar este pedido? Esta ação não pode ser desfeita.')) {
+        fetch('../api/cancel_pedido.php', {
             method: 'POST',
             headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ order_id: orderId })
+            body: JSON.stringify({ pedido_id: orderId })
         })
         .then(response => response.json())
         .then(data => {
             if (data.success) {
+                alert('Pedido cancelado com sucesso!');
+                if(data.whatsapp_url) {
+                    window.open(data.whatsapp_url, '_blank');
+                }
                 location.reload();
             } else {
                 alert('Erro: ' + data.message);
@@ -150,14 +156,8 @@ function cancelOrder(orderId) {
 }
 
 function viewOrderDetails(orderId) {
-    // Implement order details modal or redirect
     alert('Detalhes do pedido #' + orderId);
 }
-
-// Auto-refresh every 30 seconds for real-time updates
-setInterval(() => {
-    location.reload();
-}, 30000);
 </script>
 
 <?php require_once '../footer.php'; ?>

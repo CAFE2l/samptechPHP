@@ -57,6 +57,10 @@ $agendamentos = $stmt->fetchAll(PDO::FETCH_ASSOC);
                 <i class="fas fa-tools"></i>
                 <span>Serviços</span>
             </a>
+            <a href="produtos.php" class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg mb-2">
+                <i class="fas fa-box"></i>
+                <span>Produtos</span>
+            </a>
             <a href="usuarios.php" class="flex items-center space-x-3 px-4 py-3 text-gray-400 hover:bg-gray-800 rounded-lg mb-2">
                 <i class="fas fa-users"></i>
                 <span>Usuários</span>
