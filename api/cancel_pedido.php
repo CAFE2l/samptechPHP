@@ -44,8 +44,11 @@ try {
     // Build items list for WhatsApp
     $itens_texto = '';
     foreach($itens as $item) {
-        $itens_texto .= "%0A- " . $item['produto_nome'] . " (" . $item['quantidade'] . "x R$ " . number_format($item['preco_unitario'], 2, ',', '.') . ")";
+        $itens_texto .= "%0A- " . urlencode($item['produto_nome']) . " (" . $item['quantidade'] . "x R$ " . number_format($item['preco_unitario'], 2, ',', '.') . ")";
     }
+    
+    // Get payment method
+    $metodo_pagamento = $pedido['metodo_pagamento'] ?? 'Não informado';
     
     // Delete order
     $stmt = $pdo->prepare("DELETE FROM pedidos WHERE id = ?");
@@ -53,7 +56,7 @@ try {
     
     // Send WhatsApp notification to admin
     $admin_telefone = '5564992800407';
-    $mensagem = "🚨 PEDIDO CANCELADO%0A%0APedido: #" . $pedido_id . "%0ACliente: " . $pedido['nome'] . "%0AValor Total: R$ " . number_format($pedido['total'], 2, ',', '.') . "%0A%0AProdutos:" . $itens_texto . "%0A%0AEstoque restaurado automaticamente.";
+    $mensagem = "Ola, gostaria de cancelar meu pedido:%0A%0APedido: " . $pedido_id . "%0AValor: R$ " . number_format($pedido['total'], 2, ',', '.') . "%0AMetodo de Pagamento: " . $metodo_pagamento . "%0A%0AProdutos:" . $itens_texto;
     $whatsapp_url = "https://wa.me/" . $admin_telefone . "?text=" . $mensagem;
     
     echo json_encode(['success' => true, 'whatsapp_url' => $whatsapp_url]);

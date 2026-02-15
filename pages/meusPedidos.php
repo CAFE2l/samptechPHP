@@ -142,12 +142,15 @@ function cancelOrder(orderId) {
         })
         .then(response => response.json())
         .then(data => {
+            console.log('Response:', data);
             if (data.success) {
-                alert('Pedido cancelado com sucesso!');
                 if(data.whatsapp_url) {
-                    window.open(data.whatsapp_url, '_blank');
+                    console.log('WhatsApp URL:', data.whatsapp_url);
+                    window.location.href = data.whatsapp_url;
+                } else {
+                    alert('Pedido cancelado com sucesso!');
+                    location.reload();
                 }
-                location.reload();
             } else {
                 alert('Erro: ' + data.message);
             }
